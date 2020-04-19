@@ -1,0 +1,142 @@
+{
+    "roles": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string"
+    },
+    "users": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "password": "string",
+        "role": {
+            "data": "integer",
+            "ref": {
+                "table": "roles",
+                "column": "id"
+            }
+        }
+    },
+    "categories": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string"
+    },
+    "tags": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string"
+    },
+    "tags_ref": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "id_articleOrPage": "integer",
+        "id_tag": "integer"
+    },
+    "articles": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string",
+        "content": "text",
+        "date": "date",
+        "category": {
+            "data": "integer",
+            "ref": {
+                "table": "categories",
+                "column": "id"
+            }
+        },
+        "author": {
+            "data": "integer",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        },
+        "image": "string"
+    },
+    "pages": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string",
+        "content": "text",
+        "date": "date",
+        "author": {
+            "data": "integer",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        }
+    },
+    "menu": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "title": "string",
+        "order": "integer",
+        "page": {
+            "data": "integer",
+            "ref": {
+                "table": "pages",
+                "column": "id" 
+            }
+        },
+        "article": {
+            "data": "integer",
+            "ref": {
+                "table": "articles",
+                "column": "id" 
+            }
+        }
+    },
+    "comments": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "message": "string",
+        "comment_id": {
+            "data": "integer",
+            "ref": {
+                "table": "comments",
+                "column": "id"
+            }
+        },
+        "article_id": {
+            "data": "integer",
+            "ref": {
+                "table": "articles",
+                "column": "id"
+            }
+        },
+        "visibility": "boolean",
+        "author": {
+            "data": "integer",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        }
+    }
+}
