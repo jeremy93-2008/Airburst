@@ -18,6 +18,13 @@
     "express-graphql": "^0.9.0",
     "express-jwt": "^5.3.3",
     "graphql": "^15.0.0",
-    "knex": "^0.21.0"
+    "knex": "^0.21.0",
+    "mysql": "^2.18.1",
+    "rollup": "^2.6.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.0.3",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "typescript": "^3.8.3"
   }
 }

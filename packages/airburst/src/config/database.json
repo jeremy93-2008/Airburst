@@ -1,27 +1,4 @@
 {
-    "roles": {
-        "id": {
-            "type": "primary",
-            "data": "increment"
-        },
-        "name": "string",
-        "description": "string"
-    },
-    "users": {
-        "id": {
-            "type": "primary",
-            "data": "increment"
-        },
-        "name": "string",
-        "password": "string",
-        "role": {
-            "data": "integer",
-            "ref": {
-                "table": "roles",
-                "column": "id"
-            }
-        }
-    },
     "categories": {
         "id": {
             "type": "primary",
@@ -56,14 +33,14 @@
         "content": "text",
         "date": "date",
         "category": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "categories",
                 "column": "id"
             }
         },
         "author": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "users",
                 "column": "id"
@@ -81,7 +58,7 @@
         "content": "text",
         "date": "date",
         "author": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "users",
                 "column": "id"
@@ -96,14 +73,14 @@
         "title": "string",
         "order": "integer",
         "page": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "pages",
                 "column": "id" 
             }
         },
         "article": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "articles",
                 "column": "id" 
@@ -117,14 +94,14 @@
         },
         "message": "string",
         "comment_id": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "comments",
                 "column": "id"
             }
         },
         "article_id": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "articles",
                 "column": "id"
@@ -132,7 +109,7 @@
         },
         "visibility": "boolean",
         "author": {
-            "data": "integer",
+            "data": "uinteger",
             "ref": {
                 "table": "users",
                 "column": "id"

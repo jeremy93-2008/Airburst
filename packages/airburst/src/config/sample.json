@@ -1,0 +1,41 @@
+[
+    {
+        "table": "categories",
+        "data": [
+            {
+                "name": "Divertimiento",
+                "description": "Acción de divertir o divertirse."
+            },
+            {
+                "name": "Ocioso",
+                "description": "Que es inútil, sin fruto, provecho ni sustancia."
+            }
+        ]
+    },
+    {
+        "table": "articles",
+        "data": [
+            {
+                "name": "Articulo 1",
+                "description": "Un nuevo articulo 1",
+                "content": "# Hola \n *Buenos dias* Cuando estuviste aqui me hiciste feliz",
+                "date": "10/01/1993",
+                "category": 1,
+                "author": 1,
+                "image": "https://images.unsplash.com/photo-1587385646422-2667710427fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80"
+            }
+        ]
+    },
+    {
+        "table": "pages",
+        "data": [
+            {
+                "name": "Pagina 1",
+                "description": "Un nueva pagina 1",
+                "content": "# Hola Pagina \n *Buenos dias* Cuando estuviste aqui me hiciste feliz",
+                "date": "11/11/2003",
+                "author": 1
+            }
+        ]
+    }
+]
