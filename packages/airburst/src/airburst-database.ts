@@ -1,17 +1,20 @@
 import knex from "knex";
 import Database from "./config/database.json";
-import { populateDatabaseWithData } from "./airburst-sample";
 
-function createCustomTablesIfNotExist(db: knex<any, unknown[]>) {
+function createCustomTablesIfNotExist(db: knex<any, unknown[]>, trx: knex.Transaction<any, any>) {
+    const promises:  PromiseLike<void>[] = [];
     Object.keys(Database).forEach((tableName) => {
         db.schema.hasTable(tableName).then((isExist) => {
             if (isExist) return;
 
-            db.schema.createTable(tableName, (newTable) => {
+            promises.push(db.schema.createTable(tableName, (newTable) => {
                 createColumnIfNotExist(newTable, tableName);
-            }).then();
+            }).then());
         })
     });
+    Promise.all(promises).then(() => {
+        trx.commit();
+    })
     return db;
 }
 
@@ -51,31 +54,35 @@ function createColumnType(newTable: knex.CreateTableBuilder, columnName: string,
 }
 
 export function createTablesIfNotExist(db: knex<any, unknown[]>) {
-    db.schema.hasTable("roles").then((isExist) => {
-        if (isExist) return;
-
-        db.schema.createTable("roles", (newTable) => {
-            newTable.increments("id");
-            newTable.string("name");
-            newTable.string("description");
-        }).then();
-    }).then(() => {
-        db.schema.hasTable("users").then((isExist) => {
+    db.transaction((trx) => {
+        db.schema.hasTable("roles").then((isExist) => {
             if (isExist) return;
 
-            db.schema.createTable("users", (newTable) => {
+            db.schema.createTable("roles", (newTable) => {
                 newTable.increments("id");
                 newTable.string("name");
                 newTable.string("description");
-                newTable.string("password");
-                newTable.integer("role").unsigned();
-                newTable.foreign("role").references("id").inTable("roles");
-            }).then();
+            }).then(() => {
+                db.schema.hasTable("users").then((isExist) => {
+                    if (isExist) return;
+
+                    db.schema.createTable("users", (newTable) => {
+                        newTable.increments("id");
+                        newTable.string("name");
+                        newTable.string("description");
+                        newTable.string("password");
+                        newTable.integer("role").unsigned();
+                        newTable.foreign("role").references("id").inTable("roles");
+                    }).then(() => trx.commit());
+                })
+            });
         })
-    }).then(() => {
-        createCustomTablesIfNotExist(db);
-    }).finally(() => {
-        populateDatabaseWithData(db);
+    }).then((res) => {
+        db.transaction((trx) => {
+            createCustomTablesIfNotExist(db, trx);
+        }).then(res => {
+            //populateDatabaseWithData(db)
+        })
     })
 
     return db;
