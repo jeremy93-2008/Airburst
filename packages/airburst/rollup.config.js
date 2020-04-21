@@ -1,7 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
-import json from "@rollup/plugin-json";
+import copy from 'rollup-plugin-copy'
+
 export default {
-    input: './src/server/server.ts',
+    input: './src/server/app.ts',
     output: {
         file: './lib/airburst.min.js',
         format: 'cjs',
@@ -15,6 +16,10 @@ export default {
                 }
             }
         }),
-        json()
+        copy({
+            targets: [
+                {src: "config/*.json", dest: "lib/config"}
+            ]
+        })
     ]
 }

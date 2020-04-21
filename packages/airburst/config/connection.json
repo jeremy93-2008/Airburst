@@ -1,11 +1,12 @@
 {
     "database": {
-        "driver": "mysql",
+        "driver": "sqlite3",
         "version": "8.0.19",
         "database": "airburst-api",
         "host": "localhost",
         "port": "3306",
         "user": "root",
-        "password": "password" 
+        "password": "password",
+        "filename": "buenas"
     }
 }

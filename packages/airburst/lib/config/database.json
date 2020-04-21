@@ -1,0 +1,119 @@
+{
+    "categories": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string"
+    },
+    "tags": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string"
+    },
+    "tags_ref": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "id_articleOrPage": "integer",
+        "id_tag": "integer"
+    },
+    "articles": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string",
+        "content": "text",
+        "date": "date",
+        "category": {
+            "data": "uinteger",
+            "ref": {
+                "table": "categories",
+                "column": "id"
+            }
+        },
+        "author": {
+            "data": "uinteger",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        },
+        "image": "string"
+    },
+    "pages": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "name": "string",
+        "description": "string",
+        "content": "text",
+        "date": "date",
+        "author": {
+            "data": "uinteger",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        }
+    },
+    "menu": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "title": "string",
+        "order": "integer",
+        "page": {
+            "data": "uinteger",
+            "ref": {
+                "table": "pages",
+                "column": "id" 
+            }
+        },
+        "article": {
+            "data": "uinteger",
+            "ref": {
+                "table": "articles",
+                "column": "id" 
+            }
+        }
+    },
+    "comments": {
+        "id": {
+            "type": "primary",
+            "data": "increment"
+        },
+        "message": "string",
+        "comment_id": {
+            "data": "uinteger",
+            "ref": {
+                "table": "comments",
+                "column": "id"
+            }
+        },
+        "article_id": {
+            "data": "uinteger",
+            "ref": {
+                "table": "articles",
+                "column": "id"
+            }
+        },
+        "visibility": "boolean",
+        "author": {
+            "data": "uinteger",
+            "ref": {
+                "table": "users",
+                "column": "id"
+            }
+        }
+    }
+}
