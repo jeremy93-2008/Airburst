@@ -9,13 +9,14 @@
             "request": "launch",
             "name": "Iniciar programa",
             "args": [
-                "${workspaceFolder}\\packages\\airburst\\build\\airburst.min.js"
+                "${workspaceFolder}\\packages\\airburst\\lib\\airburst.min.js"
             ],
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "sourceMaps": true,
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}\\**\\*.js"
             ]
         }
     ]

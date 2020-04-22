@@ -1,13 +1,12 @@
 import typescript from 'rollup-plugin-typescript2';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import copy from 'rollup-plugin-copy'
 
 export default {
-    input: './src/server/app.ts',
+    input: './src/airburst-database.ts',
     output: {
-        file: './lib/airburst.min.js',
+        file: './lib/airburst-database.min.js',
+        format: 'es',
         sourcemap: true,
-        format: 'cjs',
         name: 'airburst'
     },
     plugins: [
@@ -18,11 +17,6 @@ export default {
                 }
             }
         }),
-        sourcemaps(),
-        copy({
-            targets: [
-                {src: "config/*.json", dest: "lib/config"}
-            ]
-        })
+        sourcemaps()
     ]
 }
