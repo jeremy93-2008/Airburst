@@ -8,6 +8,11 @@ interface IDatabase {
     }
 }
 
+interface ISample {
+    table: string;
+    data: {[x: string]: string}[]
+}
+
 export async function createNewDatabase(db: knex<any, unknown[]>, databaseJSON: IDatabase) {
     await createTableIfNoExist(db, "roles", newTable => {
         newTable.increments("id");
@@ -22,10 +27,10 @@ export async function createNewDatabase(db: knex<any, unknown[]>, databaseJSON: 
         newTable.integer("role_id").unsigned();
         newTable.foreign("role_id").references("id").inTable("roles");       
     });
-    await asyncForEach(db, Object.entries(databaseJSON))
+    await asyncForEachCustomTables(db, Object.entries(databaseJSON))
 }
 
-async function asyncForEach(db: knex<any, unknown[]>, entries: [string, { [x: string]: Column; }][]) {
+async function asyncForEachCustomTables(db: knex<any, unknown[]>, entries: [string, { [x: string]: Column; }][]) {
         for(let i = 0; i < entries.length; i++) {
             const [key, value] = entries[i];
             await createTableIfNoExist(db, key, newTable => {
@@ -36,6 +41,16 @@ async function asyncForEach(db: knex<any, unknown[]>, entries: [string, { [x: st
         }
 }
 
-export function getDatabaseObject(db: knex<any,any>) {
-    
+export async function generateSampleDatabase(db: knex<any, unknown[]>, sample: ISample[]) {
+    sample.forEach(async (singleSample) => {
+        await populateSampleData(db, singleSample)
+    })
+}
+
+async function populateSampleData(db: knex<any, unknown[]>, sample: ISample) {
+    const rowLength = (await db(sample.table)).length;
+    if(rowLength > 0) return;
+    db(sample.table).insert({...sample.data}).then((result) => {
+        console.log(result)
+    });
 }
