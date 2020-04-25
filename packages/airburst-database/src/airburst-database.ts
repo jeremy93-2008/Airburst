@@ -1,5 +1,4 @@
 import knex from "knex";
-import Bookshelf from "bookshelf";
 import { createTableIfNoExist, Column, createColumnsIfNoExist } from "./airburst-create-database";
 
 interface IDatabase {
@@ -8,9 +7,9 @@ interface IDatabase {
     }
 }
 
-interface ISample {
+export interface ISample {
     table: string;
-    data: {[x: string]: string}[]
+    data: {[x: string]: string | null}[]
 }
 
 export async function createNewDatabase(db: knex<any, unknown[]>, databaseJSON: IDatabase) {
@@ -18,6 +17,7 @@ export async function createNewDatabase(db: knex<any, unknown[]>, databaseJSON: 
         newTable.increments("id");
         newTable.string("name");
         newTable.string("description");
+        newTable.integer("weight").unsigned();
     });
     await createTableIfNoExist(db, "users", newTable => {
         newTable.increments("id");
@@ -41,16 +41,4 @@ async function asyncForEachCustomTables(db: knex<any, unknown[]>, entries: [stri
         }
 }
 
-export async function generateSampleDatabase(db: knex<any, unknown[]>, sample: ISample[]) {
-    sample.forEach(async (singleSample) => {
-        await populateSampleData(db, singleSample)
-    })
-}
 
-async function populateSampleData(db: knex<any, unknown[]>, sample: ISample) {
-    const rowLength = (await db(sample.table)).length;
-    if(rowLength > 0) return;
-    db(sample.table).insert({...sample.data}).then((result) => {
-        console.log(result)
-    });
-}

@@ -2,7 +2,7 @@ import typescript from 'rollup-plugin-typescript2';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
 export default {
-    input: './src/airburst-database.ts',
+    input: './src/index.ts',
     output: {
         file: './lib/airburst-database.min.js',
         format: 'es',

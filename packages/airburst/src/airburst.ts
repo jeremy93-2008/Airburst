@@ -1,14 +1,21 @@
-import knex from "knex";
 import fs from "fs";
 import Path from "path";
-import Process from "process"
+import knex from "knex";
+
 import { createNewDatabase, generateSampleDatabase } from "airburst-database";
+
+export let dbKnex: knex<any, unknown[]> | null = null;
+export let driver: string = "";
 
 function connectDatabase() {
     const connectionJson = fs.readFileSync(Path.resolve(__dirname, "./config/connection.json"), { encoding: "utf8" });
     const json = JSON.parse(connectionJson);
     const database = json.database;
-    return knex({
+    driver = database.driver;
+    /**
+     * Client: mssql, mysql, sqlite3, postgres, oracle
+     */
+    dbKnex = knex({
         client: database.driver,
         version: database.version,
         connection: {
@@ -18,7 +25,8 @@ function connectDatabase() {
             database: database.database,
             filename: database.filename
         }
-    })
+    });
+    return dbKnex;
 }
 
 function loadCustomDatabase() {

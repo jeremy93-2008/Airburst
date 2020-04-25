@@ -1,28 +1,36 @@
 import express from "express";
 import jwt from "express-jwt";
-import { buildSchema }  from "graphql";
+import { getTablesName } from "airburst-database";
+import { initalizeDatabase, dbKnex, driver } from "../airburst";
 import graphql from "express-graphql";
-import { initalizeDatabase } from "../airburst";
+import { buildSchema } from "graphql";
+import { getRoot } from "../airburst-graphql";
 
-initalizeDatabase();
+async function init() {
+    await initalizeDatabase();
+    const tablesName = (await getTablesName(dbKnex, driver) as {name: string}[]).map((single) => single.name);
+    const app = express();
+    //app.use(jwt({ secret: "lol" }).unless({ path: ["/auth"] }));
 
-const app = express();
+    app.use("/api", graphql({
+        schema: buildSchema(`
+            type Table {
+                columns: [String],
+                data: [String]
+            }
+            type Query {
+                ${tablesName.map((name) => {
+                    return `${name}: Table`;
+                })}
+            }
+        `),
+        graphiql: true,
+        rootValue: getRoot(tablesName)
+    }))
 
+    app.listen(3000, () => {
+        console.log("🚀 Listening...")
+    })    
+};
 
-//app.use(jwt({ secret: "lol" }).unless({ path: ["/auth"] }));
-
-app.use("/api/get", graphql({
-    schema: buildSchema(`
-        type Query {
-            hello: String
-        }
-    `),
-    graphiql: true,
-    rootValue: {
-        hello: () => "Hello world"
-    }
-}))
-
-app.listen(3000, () => {
-    console.log("🚀 Listening...")
-})
+init();

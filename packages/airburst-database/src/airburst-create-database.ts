@@ -1,6 +1,6 @@
 import knex from "knex";
 
-type DataType = "increment" | "string" | "integer" | "uinteger" | "text" | "boolean";
+type DataType = "increment" | "string" | "integer" | "date" | "uinteger" | "text" | "boolean";
 
 export type Column = {
     type?: "primary" | "unique",
@@ -46,6 +46,8 @@ function addColumnByType(table: knex.TableBuilder, name: string, type: DataType)
         case "integer": return table.integer(name);
         case "string": return table.string(name);
         case "text": return table.text(name);
+        case "date": return table.date(name);
         case "uinteger": return table.integer(name).unsigned();
+        default: return table.string(name)
     }
 }

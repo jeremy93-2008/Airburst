@@ -1,5 +1,5 @@
 import knex from "knex";
-declare type DataType = "increment" | "string" | "integer" | "uinteger" | "text" | "boolean";
+declare type DataType = "increment" | "string" | "integer" | "date" | "uinteger" | "text" | "boolean";
 export declare type Column = {
     type?: "primary" | "unique";
     data: DataType;

@@ -1,1 +1,1 @@
-{"version":3,"file":"airburst-sample-database.d.ts","sourceRoot":"","sources":["src/airburst-sample-database.ts"],"names":[],"mappings":"AAAA,iBAAS,MAAM,SAEd"}
+{"version":3,"file":"airburst-sample-database.d.ts","sourceRoot":"","sources":["src/airburst-sample-database.ts"],"names":[],"mappings":"AAAA,OAAO,IAAI,MAAM,MAAM,CAAC;AAExB,OAAO,EAAE,OAAO,EAAE,MAAM,qBAAqB,CAAC;AAE9C,wBAAsB,sBAAsB,CAAC,EAAE,EAAE,IAAI,CAAC,GAAG,EAAE,OAAO,EAAE,CAAC,EAAE,MAAM,EAAE,OAAO,EAAE,iBAKvF"}

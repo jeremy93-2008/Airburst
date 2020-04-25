@@ -5,13 +5,12 @@ interface IDatabase {
         [x: string]: Column;
     };
 }
-interface ISample {
+export interface ISample {
     table: string;
     data: {
-        [x: string]: string;
+        [x: string]: string | null;
     }[];
 }
 export declare function createNewDatabase(db: knex<any, unknown[]>, databaseJSON: IDatabase): Promise<void>;
-export declare function generateSampleDatabase(db: knex<any, unknown[]>, sample: ISample[]): Promise<void>;
 export {};
 //# sourceMappingURL=airburst-database.d.ts.map
