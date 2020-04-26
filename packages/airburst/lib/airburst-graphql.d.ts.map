@@ -1,1 +1,1 @@
-{"version":3,"file":"airburst-graphql.d.ts","sourceRoot":"","sources":["src/airburst-graphql.ts"],"names":[],"mappings":"AACA,OAAO,OAAO,MAAM,SAAS,CAAC;AAkD9B,wBAAsB,SAAS,CAAC,UAAU,EAAE,MAAM,EAAE,kCAEnD"}
+{"version":3,"file":"airburst-graphql.d.ts","sourceRoot":"","sources":["src/airburst-graphql.ts"],"names":[],"mappings":"AACA,OAAO,OAAO,MAAM,SAAS,CAAC;AA0D9B,wBAAsB,SAAS,CAAC,UAAU,EAAE,MAAM,EAAE,kCAEnD"}

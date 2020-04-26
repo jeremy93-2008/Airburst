@@ -11,19 +11,24 @@ class Table {
     constructor(private tableName: string) {
     }
 
+    name() {
+        return this.tableName;
+    }
+
     async columns() {
         if(!dbKnex) return;
         const columnsInfo = await dbKnex(this.tableName).columnInfo() as unknown as IObject<knex.ColumnInfo>;
         return Object.keys(columnsInfo).map(key => key);
     }
 
-    async data(name?: string) {
+    public async rows() {
         if(!dbKnex) return;
-        return dbKnex(this.tableName).select(name ? name : "*");
+        const select = (await dbKnex(this.tableName).select("*"));
+        return select;
     }
 }
 
-async function getTableType(currentTable: Table) {
+async function getDataType(currentTable: Table) {
     const cols = await currentTable.columns();
     const fields: IObject<any> = {};
     cols?.forEach(name => {
@@ -31,23 +36,26 @@ async function getTableType(currentTable: Table) {
             type: graphql.GraphQLString
         }
     })
-    console.log({name: "Table", fields })
-    return new graphql.GraphQLObjectType({name: "Table", fields });
+    return new graphql.GraphQLObjectType({name: `Row_${currentTable.name()}`, fields });
 }
 
 async function getQueryType(tablesName: string[]) {
     const query = {name: "Query", fields: {}};
-    tablesName.forEach(async (name) => {
-        const currentTable = new Table(name);
-        (query.fields as IObject<any>)[name] = {
-            type: new graphql.GraphQLList(await getTableType(currentTable)),
-            resolve: () => currentTable
-        }
-    });
-    console.log(query)
+    await populateTableNameOnFields(tablesName, query);
     return new graphql.GraphQLObjectType(query);
 }
 
+
+async function populateTableNameOnFields(tablesName: string[], query: { name: string; fields: {}; }) {
+    for(let i = 0; i < tablesName.length; i++) {
+        const name = tablesName[i];
+        const currentTable = new Table(name);
+        (query.fields as IObject<any>)[name] = {
+            type: new graphql.GraphQLList(await getDataType(currentTable)),
+            resolve: () => currentTable.rows()
+        };
+    };
+}
 
 export async function getScheme(tablesName: string[]) {
     return new graphql.GraphQLSchema({query: await getQueryType(tablesName)});

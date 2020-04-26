@@ -1,8 +1,8 @@
 {
     "database": {
-        "driver": "sqlite3",
+        "driver": "mysql",
         "version": "8.0.19",
-        "database": "airburst",
+        "database": "airburst-api",
         "host": "localhost",
         "port": "3306",
         "user": "root",
