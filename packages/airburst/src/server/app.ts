@@ -4,7 +4,7 @@ import { getTablesName } from "airburst-database";
 import { initalizeDatabase, dbKnex, driver } from "../airburst";
 import graphql from "express-graphql";
 import { buildSchema } from "graphql";
-import { getRoot } from "../airburst-graphql";
+import { getScheme } from "../airburst-graphql";
 
 async function init() {
     await initalizeDatabase();
@@ -13,7 +13,17 @@ async function init() {
     //app.use(jwt({ secret: "lol" }).unless({ path: ["/auth"] }));
 
     app.use("/api", graphql({
-        schema: buildSchema(`
+        schema: await getScheme(tablesName),
+        graphiql: true,
+    }))
+
+    app.listen(3000, () => {
+        console.log("🚀 Listening...")
+    })    
+};
+
+/**
+ * buildSchema(`
             type Table {
                 columns: [String],
                 data: [String]
@@ -23,14 +33,7 @@ async function init() {
                     return `${name}: Table`;
                 })}
             }
-        `),
-        graphiql: true,
-        rootValue: getRoot(tablesName)
-    }))
-
-    app.listen(3000, () => {
-        console.log("🚀 Listening...")
-    })    
-};
+        `)
+ */
 
 init();
